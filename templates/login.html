@@ -1,0 +1,14 @@
+{% extends 'layout.html' %}
+
+{% block content %}
+<h1>Entre no Sistema</h1>
+<form method="post">
+    <label for="usuario">Usuário</label>
+    <input type="text" name="usuario" id="usuario" />
+    <br>
+    <label for="senha">Senha</label>
+    <input type="password" name="senha" id="senha" />
+    <br>
+    <input type="submit" value="Entrar" />
+</form>
+{% endblock %}
