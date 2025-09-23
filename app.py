@@ -17,13 +17,13 @@ def create_app(): # cria uma função para definir o aplicativo
     def index(): # função que gerencia rota
         """ Página inicial"""
         if 'user' not in session:
-            return redirect(url_for("Usuario.login"))
+            return redirect(url_for("login"))
         
         return render_template("index.html") # Renderiza um template
 
     @app.route("/login")
     def login():
-        return "login"
+        return render_template("login.html")
     
     @app.route("/produtos")
     def produtos():
