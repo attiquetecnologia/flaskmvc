@@ -1,14 +1,28 @@
 {% extends 'layout.html' %}
 
 {% block content %}
+<div class="container">
 <h1>Entre no Sistema</h1>
-<form method="post">
-    <label for="usuario">Usuário</label>
-    <input type="text" name="usuario" id="usuario" />
+
+
+<form method="post" class="login-form">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <ul class="alert alert-danger">
+                {% for category, message in messages %}
+                    <li class="{{ category }}">{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    {# form.csrf_token #}
+    <label class="form-label" for="usuario">Usuário</label>
+    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="usuario" />
     <br>
     <label for="senha">Senha</label>
-    <input type="password" name="senha" id="senha" />
+    <input type="password" class="form-control" name="senha" id="senha" />
     <br>
-    <input type="submit" value="Entrar" />
+    <input type="submit" class="btn btn-primary" value="Entrar" />
 </form>
+</div>
 {% endblock %}

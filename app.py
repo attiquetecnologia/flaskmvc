@@ -1,7 +1,17 @@
+"""
+
+DOCUMENTAÇÃO DO FLASK LOGIN
+https://flask-login.readthedocs.io/en/latest/
+"""
+
 import click
-from flask import Flask, redirect, render_template, request, jsonify, session, url_for
+from flask import Flask, redirect, render_template, request, flash, session, url_for
 from flask.cli import with_appcontext
+from flask_login import LoginManager
+from werkzeug.security import check_password_hash
+
 from database import db
+from models import User
 
 def create_app(): # cria uma função para definir o aplicativo
     app = Flask(__name__) # instancia o Flask
@@ -9,9 +19,16 @@ def create_app(): # cria uma função para definir o aplicativo
 
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///dados.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-    
+
+    login_manager = LoginManager()   
+    login_manager.init_app(app)
+
     db.init_app(app)
     app.cli.add_command(init_db_command)
+
+    @login_manager.user_loader
+    def load_user(user_id: int):      
+        return User.get(user_id)
 
     @app.route("/") # cria uma rota
     def index(): # função que gerencia rota
@@ -21,11 +38,25 @@ def create_app(): # cria uma função para definir o aplicativo
         
         return render_template("index.html") # Renderiza um template
 
-    @app.route("/login")
+    @app.route("/login", methods=('POST', 'GET'))
     def login():
+        if "POST" in request.method:
+            #lógica de login
+            username = request.form.get("username")
+            password = request.form.get("password")
+
+            user = User.query.filter_by(username=username).first()
+
+            if user and check_password_hash(user.password, password):
+                login_user(user)
+                return redirect(url_for('index'))
+        else:
+            flash('Usuário ou senha inválidos')
+
         return render_template("login.html")
     
-    @app.route("/produtos")
+
+    @app.route("/produtos") 
     def produtos():
         return ""
     
