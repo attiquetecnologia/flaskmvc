@@ -10,6 +10,9 @@ from flask.cli import with_appcontext
 from flask_login import LoginManager
 from werkzeug.security import check_password_hash
 
+from flask_migrate import Migrate
+
+
 from database import db
 from models import User
 
@@ -25,6 +28,8 @@ def create_app(): # cria uma função para definir o aplicativo
 
     db.init_app(app)
     app.cli.add_command(init_db_command)
+    
+    migrate = Migrate(app, db)
 
     @login_manager.user_loader
     def load_user(user_id: int):      
