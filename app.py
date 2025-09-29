@@ -39,26 +39,26 @@ def create_app(): # cria uma função para definir o aplicativo
     def index(): # função que gerencia rota
         """ Página inicial"""
         if 'user' not in session:
-            return redirect(url_for("login"))
+            return redirect(url_for("auth.login"))
         
         return render_template("index.html") # Renderiza um template
 
-    @app.route("/login", methods=('POST', 'GET'))
-    def login():
-        if "POST" in request.method:
-            #lógica de login
-            username = request.form.get("username")
-            password = request.form.get("password")
+    # @app.route("/login", methods=('POST', 'GET'))
+    # def login():
+    #     if "POST" in request.method:
+    #         #lógica de login
+    #         username = request.form.get("username")
+    #         password = request.form.get("password")
 
-            user = User.query.filter_by(username=username).first()
+    #         user = User.query.filter_by(username=username).first()
 
-            if user and check_password_hash(user.password, password):
-                login_user(user)
-                return redirect(url_for('index'))
-        else:
-            flash('Usuário ou senha inválidos')
+    #         if user and check_password_hash(user.password, password):
+    #             login_user(user)
+    #             return redirect(url_for('index'))
+    #     else:
+    #         flash('Usuário ou senha inválidos')
 
-        return render_template("login.html")
+    #     return render_template("login.html")
     
 
     @app.route("/produtos") 
@@ -72,6 +72,13 @@ def create_app(): # cria uma função para definir o aplicativo
     @app.route("/exclusao")
     def exclui_produto():
         return ""
+    
+    ## Registre módulos do sistema (bluprints controllers)
+    # from arquivo import bp
+    # app.register_blueprint(bp)
+
+    from auth import bp # Autenticação
+    app.register_blueprint(bp)
 
     return app # retorna o app criado
 
