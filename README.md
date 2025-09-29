@@ -29,3 +29,6 @@ $ flask init-db
 
 6- Adicione um usuário administrador
 $ flask create-admin-user
+
+7- Teste o aplicativo
+http://127.0.0.1:5000
