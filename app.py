@@ -28,6 +28,7 @@ def create_app(): # cria uma função para definir o aplicativo
 
     db.init_app(app)
     app.cli.add_command(init_db_command)
+    app.cli.add_command(create_admin_user)
     
     migrate = Migrate(app, db)
 
@@ -42,23 +43,6 @@ def create_app(): # cria uma função para definir o aplicativo
             return redirect(url_for("auth.login"))
         
         return render_template("index.html") # Renderiza um template
-
-    # @app.route("/login", methods=('POST', 'GET'))
-    # def login():
-    #     if "POST" in request.method:
-    #         #lógica de login
-    #         username = request.form.get("username")
-    #         password = request.form.get("password")
-
-    #         user = User.query.filter_by(username=username).first()
-
-    #         if user and check_password_hash(user.password, password):
-    #             login_user(user)
-    #             return redirect(url_for('index'))
-    #     else:
-    #         flash('Usuário ou senha inválidos')
-
-    #     return render_template("login.html")
     
 
     @app.route("/produtos") 
@@ -87,6 +71,13 @@ def init_db():
     db.create_all()
     # db.reflect()
 
+@click.command("create-admin-user")
+@with_appcontext
+def create_admin_user():
+    from getpass import getpass
+    from auth import create_user
+
+    create_user(getpass("Digite a senha para admin: "))
 
 @click.command("init-db")
 @with_appcontext

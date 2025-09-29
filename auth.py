@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, url_for, render_template, flash
-from werkzeug.security import check_password_hash
+from werkzeug.security import check_password_hash, generate_password_hash
 
-
+from database import db
 from models import User
 
 bp = Blueprint(__name__, "Auth")
@@ -21,3 +21,10 @@ def login():
         flash('Usuário ou senha inválidos')
 
     return render_template("auth/login.html")
+
+def create_user(password: str):
+    user = User(username="admin", nome="Administrador", password=generate_password_hash(password))
+    db.session.add(user)
+    db.session.commit()
+
+    print(f"Criando usuário {user.as_dict()}")
