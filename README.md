@@ -32,3 +32,13 @@ $ flask create-admin-user
 
 7- Teste o aplicativo
 http://127.0.0.1:5000
+
+
+**Software para operação de dados**
+SQLite Studio: somente sqlite, a versão portátil não precisa instalar: https://sqlitestudio.pl/
+
+DBEaver: conecta em qualquer banco de dados, precisa de instalção e é multiplataforma: https://dbeaver.io/
+
+
+**Software para design de banco**
+https://www.drawio.com/
