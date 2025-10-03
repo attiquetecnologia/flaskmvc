@@ -41,7 +41,7 @@ flask init-db
 
 6- Adicione um usuário administrador
 ```
-campo_dataflask create-admin-user
+flask create-admin-user
 ```
 
 7- Teste o aplicativo
