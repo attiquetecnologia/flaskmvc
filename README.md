@@ -5,7 +5,9 @@ Usado para ensnino da arquitetura MVC...
 **Instalação**
 
 1 - Faça o clone do repositório para seu diretório de trabalho
-$ git clone https://github.com/attiquetecnologia/flaskmvc.git \
+\```bash
+$ git clone https://github.com/attiquetecnologia/flaskmvc.git
+\```
 
 2- Acesse o diretório clonado flaskmvc
 $ cd flaskmvc
