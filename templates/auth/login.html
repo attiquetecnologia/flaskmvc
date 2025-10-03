@@ -2,10 +2,10 @@
 
 {% block content %}
 <div class="container">
-<h1>Entre no Sistema</h1>
+    <h1>Entre no Sistema</h1>
 
-<form method="post" class="login-form">
-    {% with messages = get_flashed_messages(with_categories=true) %}
+    <form method="post" class="login-form">
+        {% with messages = get_flashed_messages(with_categories=true) %}
         {% if messages %}
             <ul class="alert alert-danger">
                 {% for category, message in messages %}
@@ -13,15 +13,17 @@
                 {% endfor %}
             </ul>
         {% endif %}
-    {% endwith %}
-    {# form.csrf_token #}
-    <label class="form-label" for="usuario">Usuário</label>
-    <input type="text" class="form-control" name="usuario" id="usuario" placeholder="usuario" />
-    <br>
-    <label for="senha">Senha</label>
-    <input type="password" class="form-control" name="senha" id="senha" />
-    <br>
-    <input type="submit" class="btn btn-primary" value="Entrar" />
-</form>
+        {% endwith %}
+        <div class="mb-3">
+            <label for="usuario" class="form-label">Usuário</label>
+            <input type="text" class="form-control" id="usuario" name="usuario" aria-describedby="emailHelp">
+        </div>
+        <div class="mb-3">
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha">
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Entrar</button>
+    </form>
 </div>
 {% endblock %}
