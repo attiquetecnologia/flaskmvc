@@ -1,5 +1,4 @@
 """
-
 DOCUMENTAÇÃO DO FLASK LOGIN
 https://flask-login.readthedocs.io/en/latest/
 """
@@ -36,57 +35,14 @@ def create_app(): # cria uma função para definir o aplicativo
     def load_user(user_id: int):      
         return User.get(user_id)
 
-    @app.route("/") # cria uma rota
-    def index(): # função que gerencia rota
-        """ Página inicial"""
-        if 'user' not in session:
-            return redirect(url_for("auth.login"))
-        
-        return render_template("index.html") # Renderiza um template
-    
-
-    @app.route("/produtos")
-    def produtos():
-        return ""
-    
-    @app.route("/cadastro_exemplo", methods=('POST', 'GET'))
-    def cadastro_exemplo():
-        if request.method == 'POST':
-            # Capturar dados do formulário para a classe instanciada
-            from models import CamposExemplo
-            camposExemplo = CamposExemplo(
-                campo_texto = request.form.get("campo_texto")
-                ,campo_texto_limitado = request.form.get("campo_texto_limitado") # até 10 caracteres
-                ,campo_email = request.form.get("campo_email")
-                ,campo_numero = request.form.get("campo_numero")
-                ,campo_data = request.form.get("campo_data") # precisa fazer cast
-                ,campo_selecao = request.form.get("campo_selecao")
-
-                # Nos campos de checagem é preciso fazer uma validação para assumir verdadeiro ou falso
-                ,chk_habilitado = "chk_habilitado" in request.form
-                ,chk_desabilitado = "chk_desabilitado" in request.form # se estiver no dicináiro é True
-                ,rb_resposta = request.form.get("rb_resposta") # Semelhante ao select box
-                ,area_texto = request.form.get("area_texto")
-            ) # fim instancia
-
-            # iniciar uma sessão com banco para salvar os dados
-            # e fazer o commit
-            db.session.add(camposExemplo)
-            db.session.commit()
-
-            flash("Dados salvos com sucesso!!")
-            
-        return render_template('cadastro_exemplo.html')
-
-    @app.route("/exclusao")
-    def exclui_produto():
-        return ""
-    
     ## Registre módulos do sistema (bluprints controllers)
     # from arquivo import bp
     # app.register_blueprint(bp)
 
     from auth import bp # Autenticação
+    app.register_blueprint(bp)
+
+    from controller import bp
     app.register_blueprint(bp)
 
     return app # retorna o app criado
