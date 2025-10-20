@@ -1,10 +1,16 @@
 from flask import Blueprint, request, redirect, url_for, render_template, flash
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import login_required
 
 from database import db
 from models import User
 
 bp = Blueprint(__name__, "Auth")
+
+@bp.route("/settings")
+@login_required
+def settings():
+    pass
 
 @bp.route("/login", methods=('POST', 'GET'))
 def login():
@@ -29,3 +35,9 @@ def create_user(password: str):
     db.session.commit()
 
     print(f"Criando usuário {user.as_dict()}")
+
+@bp.route("/logout")
+@login_required
+def logout():
+    logout_user()
+    return redirect(somewhere)

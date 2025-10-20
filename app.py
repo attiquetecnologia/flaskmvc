@@ -22,7 +22,9 @@ def create_app(): # cria uma função para definir o aplicativo
     app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///dados.db"
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-    login_manager = LoginManager()   
+    login_manager = LoginManager()  
+    login_manager.login_view = "auth.login" 
+
     login_manager.init_app(app)
 
     db.init_app(app)

@@ -4,6 +4,7 @@ Esse arquivo é um exemplo de controller
 
 from flask import Blueprint, request, redirect, url_for, render_template, flash
 from werkzeug.security import check_password_hash, generate_password_hash
+from flask_login import login_required
 
 from database import db
 from models import User
@@ -32,6 +33,7 @@ def listar():
     return ""
 
 @bp.route("/cadastro_exemplo", methods=('POST', 'GET'))
+@login_required # trava de autenticação
 def cadastro_exemplo():
     if request.method == 'POST':
         # Capturar dados do formulário para a classe instanciada
