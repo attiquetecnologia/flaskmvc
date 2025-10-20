@@ -15,7 +15,7 @@ def settings():
 
 @bp.route("/login", methods=('POST', 'GET'))
 def login():
-    if "POST" in request.method:
+    if request.method == "POST":
         #lógica de login
         username = request.form.get("username")
         password = request.form.get("password")
@@ -44,17 +44,30 @@ def logout():
     return redirect(somewhere)
 
 @bp.route('/change_password', methods=['GET', 'POST'])
-@login_required
+# @login_required
 def change_password():
+    """
+    Essa versão não exige que o usuário esteja autenticado, um sério problema de segurança.
+    Mas como o objetivo é ensinar um processo de reset de senha será feito desta maneira no framework.
+    """
     
     if request.method=="POST":
-        if check_password_hash(current_user.password_hash, form.current_password.data):
-            current_user.password_hash = generate_password_hash(form.new_password.data)
-            db.session.commit() # Assuming you have a database session
-            flash('Your password has been changed successfully!', 'success')
-            logout_user() # Optional: Invalidate current session and force re-login
-            return redirect(url_for('login'))
-        else:
-            flash('Incorrect current password.', 'danger')
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        senha_repetida = request.form.get("senha_repetida")
 
-    return render_template('change_password.html')
+        if senha_repetida != senha:
+            flash("As senhas não conferem")
+        else:
+            user = User.query.filter_by(email=email).first()
+            
+            if user:
+                user.password = generate_password_hash(senha_repetida)
+                db.session.commit() # Atualiza o usuário
+                flash('Senha alterada com sucesso')
+                
+                return redirect(url_for('auth.login'))
+            else:
+                flash('Usuário não encontrado')
+
+    return render_template('auth/change_password.html')
