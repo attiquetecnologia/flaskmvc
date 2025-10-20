@@ -11,13 +11,15 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(150), unique=True, nullable=False)
     password = db.Column(db.String, nullable=False)
     nome = db.Column(db.String(150), nullable=False)
+    email = db.Column(db.String(200), nullable=False, unique=True)
     events = relationship("AuthEvent", back_populates="user")
 
     def as_dict(self):
         return {
             'id': self.id,
             'username': self.username,
-            'nome': self.nome
+            'nome': self.nome,
+            'email': self.email
         }
 
 class AuthEvent(db.Model):

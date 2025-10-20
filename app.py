@@ -57,7 +57,7 @@ def init_db():
     db.create_all()
     # db.reflect()
 
-@click.command("create-admin-user")
+@click.command("createsuperuser")
 @with_appcontext
 def create_admin_user():
     from getpass import getpass
