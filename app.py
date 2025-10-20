@@ -35,7 +35,7 @@ def create_app(): # cria uma função para definir o aplicativo
 
     @login_manager.user_loader
     def load_user(user_id: int):      
-        return User.get(user_id)
+        return User.query.filter_by(id=user_id).first()
 
     ## Registre módulos do sistema (bluprints controllers)
     # from arquivo import bp

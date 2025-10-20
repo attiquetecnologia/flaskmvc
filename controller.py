@@ -3,11 +3,11 @@ Esse arquivo é um exemplo de controller
 """
 
 from flask import Blueprint, request, redirect, url_for, render_template, flash
-from werkzeug.security import check_password_hash, generate_password_hash
 from flask_login import login_required
 
+
 from database import db
-from models import User
+from models import CamposExemplo
 
 """
     ControllerExemplo: Nome da blueprint que será usada em urlfor
@@ -30,7 +30,11 @@ def listar():
     """
     Lista os dados da tabela CadastroExemplo
     """
-    return ""
+    
+    # Criar uma query (veja os imports)
+    listagem = CamposExemplo.query.filter_by().all()
+
+    return render_template("listagem_exemplo.html", listagem=listagem)
 
 @bp.route("/cadastro_exemplo", methods=('POST', 'GET'))
 @login_required # trava de autenticação
@@ -38,14 +42,18 @@ def cadastro_exemplo():
     if request.method == 'POST':
         # Capturar dados do formulário para a classe instanciada
         from models import CamposExemplo
+        from datetime import datetime
+        
+        # precisa fazer cast com a data
+        campo_data = datetime.strptime(request.form.get("campo_data"), '%Y-%m-%d').date()
+
         camposExemplo = CamposExemplo(
             campo_texto = request.form.get("campo_texto")
             ,campo_texto_limitado = request.form.get("campo_texto_limitado") # até 10 caracteres
             ,campo_email = request.form.get("campo_email")
             ,campo_numero = request.form.get("campo_numero")
-            ,campo_data = request.form.get("campo_data") # precisa fazer cast
             ,campo_selecao = request.form.get("campo_selecao")
-
+            ,campo_data = campo_data
             # Nos campos de checagem é preciso fazer uma validação para assumir verdadeiro ou falso
             ,chk_habilitado = "chk_habilitado" in request.form
             ,chk_desabilitado = "chk_desabilitado" in request.form # se estiver no dicináiro é True

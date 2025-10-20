@@ -1,7 +1,7 @@
 from flask import Blueprint, request, redirect, url_for, render_template, flash
 from werkzeug.security import check_password_hash, generate_password_hash
 
-from flask_login import login_required, current_user
+from flask_login import login_required, login_user, logout_user
 
 from database import db
 from models import User
@@ -24,9 +24,9 @@ def login():
 
         if user and check_password_hash(user.password, password):
             login_user(user)
-            return redirect(url_for('index'))
-    else:
-        flash('Usuário ou senha inválidos')
+            return redirect(url_for('ctrl_home.index'))
+        else:
+            flash('Usuário ou senha inválidos')
 
     return render_template("auth/login.html")
 
@@ -41,7 +41,7 @@ def create_user(password: str):
 @login_required
 def logout():
     logout_user()
-    return redirect(somewhere)
+    return redirect(url_for('auth.login'))
 
 @bp.route('/change_password', methods=['GET', 'POST'])
 # @login_required
