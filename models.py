@@ -50,4 +50,24 @@ class CamposExemplo(db.Model):
     rb_resposta = db.Column(db.String(1), nullable=False)
     area_texto = db.Column(db.String(450), nullable=False)
 
-# Other models here...
+class Venda(db.Model):
+    __tablename__ = 'vendas'
+    id = db.Column(db.Integer, primary_key=True)
+    data_venda = db.Column(db.Date, nullable=False)
+    pago = db.Column(db.Boolean, nullable=False)
+
+class Livro(db.Model):
+    __tablename__ = 'livros'
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(200), nullable=False)
+    descricao = db.Column(db.String(1000), nullable=False)
+    autores = db.Column(db.String(200), nullable=False)
+    estoque = db.Column(db.Integer, nullable=False)
+
+class Produto(db.Model):
+    __tablename__ = 'produtos'
+    id = db.Column(db.Integer, primary_key=True)
+    titulo = db.Column(db.String(200), nullable=False)
+    descricao = db.Column(db.String(1000), nullable=False)
+    estoque = db.Column(db.Integer, nullable=False)
+    estoque_min = db.Column(db.Integer, nullable=False)
