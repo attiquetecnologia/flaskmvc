@@ -1,1 +1,1 @@
-git clone https://github.com/attiquetecnologia/aulaHTML.git flaskmvc && cd flaskmvc && python -m venv .venv && source .venv/scripts/activate && python -m pip install --upgrade pip && pip install -r requirements.txt && flask run
+git clone https://github.com/attiquetecnologia/flaskmvc.git flaskmvc && cd flaskmvc && python -m venv .venv && source .venv/scripts/activate && python -m pip install --upgrade pip && pip install -r requirements.txt && flask run
