@@ -44,10 +44,16 @@ flask init-db
 flask create-admin-user
 ```
 
-7- Teste o aplicativo
+7- Teste com o comando
+```
+flask run
+```
+
+8- Digite no navegador
 ```
 http://127.0.0.1:5000
 ```
+
 
 **Software para operação de dados** \
 SQLite Studio: somente sqlite, a versão portátil não precisa instalar: \ https://sqlitestudio.pl/ \
