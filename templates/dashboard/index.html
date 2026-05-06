@@ -370,5 +370,46 @@
       crossorigin="anonymous"
       class="astro-vvvwv3sm"
     ></script>
-    <script src="/static/css/dashboard.js" class="astro-vvvwv3sm"></script>
+    <script type="text/javascript">
+/* globals Chart:false */
+(() => {
+  'use strict'
+
+  // Graphs
+  const ctx = document.getElementById('myChart')
+  new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [
+        {% for venda in vendas %}
+        "{{venda.get("mes")}}",
+        {% endfor %}
+      ],
+      datasets: [{
+        data: [
+        {% for venda in vendas %}
+        {{venda.get("total")}},
+        {% endfor %}
+        ],
+        lineTension: 0,
+        backgroundColor: 'transparent',
+        borderColor: '#007bff',
+        borderWidth: 4,
+        pointBackgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      plugins: {
+        legend: {
+          display: true,
+        },
+        tooltip: {
+          boxPadding: 3
+        }
+      }
+    }
+  })
+})()
+
+    </script>
     {% endblock %}
